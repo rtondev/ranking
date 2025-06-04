@@ -17,7 +17,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem 0;
         }
         .ranking-card {
             background: white;
@@ -42,14 +41,14 @@
             border-radius: 24px 24px 0 0;
         }
         .curso-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             margin: 0;
             color: #1a1a1a;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
         .curso-header small {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #666;
         }
         .aluno-card {
@@ -67,13 +66,13 @@
             background: white;
         }
         .aluno-card .fw-medium {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             color: #1a1a1a;
             margin-bottom: 0.15rem;
             font-weight: 500;
         }
         .aluno-card small {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #666;
         }
         .posicao-badge {
@@ -104,17 +103,17 @@
             box-shadow: 0 4px 16px rgba(205, 127, 50, 0.4);
         }
         .fw-bold {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #28a745;
             font-weight: 700;
             text-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .text-success {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #28a745;
         }
         .text-muted {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: #666;
         }
         .aluno-card.top-1 {
@@ -183,7 +182,7 @@
             color: #FFD700 !important;
         }
         .ranking-title {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: #1a1a1a;
             margin-bottom: 3rem;
@@ -277,14 +276,14 @@
         }
         .top-student-card.pos-2 .student-name,
         .top-student-card.pos-3 .student-name {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
         }
         .top-student-card.pos-2 .student-points,
         .top-student-card.pos-3 .student-points {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
         }
         .student-name {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
             color: #1a1a1a;
@@ -295,32 +294,27 @@
             -webkit-text-fill-color: transparent;
         }
         .student-course {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #666;
             margin-bottom: 1.5rem;
             font-weight: 500;
         }
         .student-points {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 800;
             color: #28a745;
             margin-bottom: 0.5rem;
         }
         .student-time {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #666;
             font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0">Ranking por Curso</h1>
-            <div class="countdown">
-                Atualiza em: <span id="countdown">5</span>s
-            </div>
-        </div>
+    <div class="container">
+        
 
         <div id="loading" class="text-center py-5">
             <div class="spinner-border text-primary" role="status">
@@ -338,7 +332,7 @@
     
     <script>
         const API_URL = 'https://api.sementeifzn.site';
-        let countdown = 5;
+        let countdown = 10;
         let countdownInterval;
 
         function formatTime(seconds) {
@@ -352,16 +346,19 @@
         }
 
         function updateCountdown() {
-            document.getElementById('countdown').textContent = countdown;
+            const countdownElement = document.getElementById('countdown');
+            if (countdownElement) {
+                countdownElement.textContent = countdown;
+            }
             if (countdown <= 0) {
-                countdown = 5;
+                countdown = 10;
                 fetchRanking();
             }
         }
 
         function startCountdown() {
             if (countdownInterval) clearInterval(countdownInterval);
-            countdown = 5;
+            countdown = 10;
             countdownInterval = setInterval(() => {
                 countdown--;
                 updateCountdown();
@@ -411,6 +408,9 @@
                 const rankingHtml = `
                     <div class="container-fluid py-4">
                         <h1 class="ranking-title">Ranking Geral</h1>
+                        <div class="text-center mb-4">
+                            <small class="text-muted">Atualiza em <span id="countdown">${countdown}</span>s</small>
+                        </div>
                         
                         <!-- Top 3 Alunos -->
                         <div class="top-students">
